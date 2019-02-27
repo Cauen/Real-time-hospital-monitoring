@@ -32,22 +32,22 @@ import io from 'socket.io-client';
 })
 export default class About extends Vue {
   message: string = 'Tempo Real';
-  leitos = [];
-  leitoskeys = [];
-  socket = io('localhost:3001');
+  leitos: Array<any> = [];
+  leitoskeys: Array<string> = [];
+  socket = io('68.183.102.182:3001');
 
-  getLeitos(data) {
+  getLeitos(data: any) {
     this.leitos = data;
     this.leitoskeys = Object.keys(data);
   }
 
   mounted() {
     this.socket.emit('HOSPITAL', {});
-    this.socket.on('ADMINS', (data) => {
+    this.socket.on('ADMINS', (data:any) => {
         
       this.getLeitos(data);
     });
-    this.socket.on('EDIT', (data) => {
+    this.socket.on('EDIT', (data:any) => {
         this.getLeitos(data);
     });
     console.log('Mounted');

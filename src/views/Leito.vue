@@ -63,9 +63,10 @@ export default class Home extends Vue {
   pressaod: number = 80;
   frequencia: number = 80;
   idade: number = 18;
-  socket= io('localhost:3001');
+  interval: any;
+  socket= io('68.183.102.182:3001');
 
-  editarCama(e) {
+  editarCama(e:any) {
     e.preventDefault();
       
     this.emitir();
@@ -190,17 +191,25 @@ export default class Home extends Vue {
   }
 
   simulateChange() {
-      var rootps = this.getRandomArbitrary(-0.01, 0.01);
-      var rootpd = this.getRandomArbitrary(-0.01, 0.01);
-      var roottm = this.getRandomArbitrary(-0.01, 0.01);
+      var rootps:number = this.getRandomArbitrary(-0.01, 0.01);
+      var rootpd:number = this.getRandomArbitrary(-0.01, 0.01);
+      var roottm:number = this.getRandomArbitrary(-0.01, 0.01);
       console.log('Simulando');
-      
+      /*
       if (this.pressaos) 
           this.pressaos = parseFloat(parseFloat(parseFloat(this.pressaos) + parseFloat(this.pressaos*rootps))).toFixed(2);
       if (this.pressaod) 
           this.pressaod = parseFloat(parseFloat(parseFloat(this.pressaod) + parseFloat(this.pressaod*rootpd))).toFixed(2);
       if (this.frequencia) 
           this.frequencia = parseFloat(parseFloat(parseFloat(this.frequencia) + parseFloat(this.frequencia*roottm))).toFixed(2);
+*/
+          
+      if (this.pressaos) 
+          this.pressaos = parseFloat((this.pressaos + this.pressaos*rootps).toFixed(2));
+      if (this.pressaod) 
+          this.pressaod = parseFloat((this.pressaod + this.pressaod*rootpd).toFixed(2));
+      if (this.frequencia) 
+          this.frequencia = parseFloat((this.frequencia + this.frequencia*roottm).toFixed(2));
             
 
       this.emitir();
@@ -217,7 +226,7 @@ export default class Home extends Vue {
       clearInterval(this.interval);
   }
 
-  getRandomArbitrary(min, max) {
+  getRandomArbitrary(min:number, max:number) {
       return Math.random() * (max - min) + min;
   }
 
